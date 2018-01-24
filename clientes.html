@@ -1,0 +1,109 @@
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8"/>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+
+
+
+		$(function($)
+		{
+
+			$("#btn").click(function()
+			{
+				var valor = $("#n1").val();
+
+
+				if(valor == "")
+				{
+					alert("O campo deve ser preenchido!");
+					$("#n1").focus();
+					return false;
+				}else
+				{
+
+					$.post("clientes_curl.php", {nome:valor}, function(retorno)
+					{
+
+						//$(".result").html("Resultado: " + retorno);
+
+						//Converter string em objeto
+						var valorRetorno = JSON.parse(retorno);
+
+						valorRetorno.forEach(function(o, index)
+						{
+							//$('#myTable tbody').append("<tr><td>"+ o.cli_nome +"</tr></td>"); 
+							$('#myTable tbody').append("<tr> <td>"+ o.cli_nome +"</td> <td>"+ o.cat_nome +"</td> </tr>"); 
+						});
+
+					});
+
+				}
+
+			});
+		});
+
+
+		/*
+
+		function validaForm()
+		{
+		
+			d = document.formBusca;
+			if(d.nome.value == ""){
+				alert("O campo " + d.nome.name + " deve ser preenchido!");
+				d.nome.focus();
+				return false;
+			}
+			
+			var name=document.getElementById('name').value;
+			var dataString='name='+ name;
+				
+			
+			$.ajax({
+				type:"post",
+				//url:"clientes_curl.php",
+				url:"clientes_db.php",
+				//datatype: "JSON",
+				data:dataString,
+				cache:false,
+				success: function(data){
+
+					//Lê o arquivo retornado (data) e joga na tabela
+
+					//$output = utf8_encode(data);
+					$json = json_decode(data);
+
+					var obj = JSON.parse($json);
+				    obj.forEach(function(o, index){
+				       $('#myTable tbody').append("<tr><td>"+ o.cli_nome +"</tr></td>"); 
+				    });
+					
+				}
+			});
+			return false;		
+		};*/
+		
+	</script>
+		
+</head>
+<body>
+
+	<p>Nome para busca: <input type="text" id="n1" />
+	<p><input type="button" id="btn" value="Buscar"></button>
+
+	<div class="result">
+
+		<table id="myTable" border="1px">
+			<tbody>
+			    
+			</tbody>
+		</table>
+		
+	</div>
+	
+ 
+</body>
+</html>
