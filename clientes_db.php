@@ -4,7 +4,7 @@
 /**
 * Construct Class - connect database
 */
-class Consulta 
+class Clientes_db 
 {
 	var $hostname;
 	var $user;
@@ -53,7 +53,7 @@ class Consulta
 $nome = $_POST['nome'];
 $mesagem = $_POST['mensagem'];
 
-$conn = new Consulta('localhost', 'root', '', 'avaliacao');
+$conn = new Clientes_db('localhost', 'root', '', 'avaliacao');
 
 //$query = "SELECT * FROM tbl_clientes WHERE cli_nome ='" . $nome . "' ";
 $query = "SELECT tbl_clientes.cli_nome, tbl_categorias.cat_nome 
